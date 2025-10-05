@@ -1,4 +1,4 @@
-package com.example.assignment2_multi_screen_app.Routes
+package com.example.assignment2_multi_screen_app.routes
 
 sealed class Routes (val route: String){
     object Creation: Routes("CreationFormRoute")

@@ -1,4 +1,4 @@
-package com.example.assignment2_multi_screen_app.Layout
+package com.example.assignment2_multi_screen_app.layout
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding

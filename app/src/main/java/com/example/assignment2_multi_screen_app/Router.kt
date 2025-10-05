@@ -7,7 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.assignment2_multi_screen_app.Routes.Routes
+import com.example.assignment2_multi_screen_app.routes.Routes
 
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
 

@@ -1,4 +1,4 @@
-package com.example.assignment2_multi_screen_app.Layout
+package com.example.assignment2_multi_screen_app.layout
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Create
@@ -8,7 +8,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import com.example.assignment2_multi_screen_app.LocalNavController
-import com.example.assignment2_multi_screen_app.Routes.Routes
+import com.example.assignment2_multi_screen_app.routes.Routes
 
 @Composable
 fun SharedBottomBar() {
