@@ -1,6 +1,7 @@
 package com.example.assignment2_multi_screen_app.data
 
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
@@ -12,11 +13,11 @@ import java.net.URL
 class ImageContentViewModel: ViewModel() {
     private val _content = mutableStateListOf<ImageContent>()
 
-    val content: List<ImageContent>
-        get() = _content
+    val content: SnapshotStateList<ImageContent> = _content
 
     fun addContent(name: String, imageURL: String, contentDescription: String) {
         // validate imageURL
+
         viewModelScope.launch {
             if (isImageURL(imageURL)) {
                 _content.add(ImageContent(name, imageURL, contentDescription))
@@ -30,7 +31,7 @@ class ImageContentViewModel: ViewModel() {
 
     // This will have to be a asynchronous function/coroutine
     // because it connects to the internet to validate if it's an image
-    suspend fun isImageURL(imageURL: String): Boolean {
+    private suspend fun isImageURL(imageURL: String): Boolean {
 
         if(!isValidUrl(imageURL)) {
             return false
@@ -42,22 +43,34 @@ class ImageContentViewModel: ViewModel() {
                     //creates a URL object
                     val url = URL(imageURL)
                     val connection = url.openConnection() as HttpURLConnection
-                    connection.requestMethod = "HEAD"
+
+                    HttpURLConnection.setFollowRedirects(true)
+                    connection.instanceFollowRedirects = true
+
+                    connection.requestMethod = "GET"
+
                     connection.connect()
 
                     val contentType = connection.contentType
                     val responseCode = connection.responseCode
 
-                    connection.disconnect()
+//                    connection.inputStream.close()
+
+                    println("Response: $responseCode, Content-Type: $contentType, result: ${responseCode in 200..299 && ((contentType != null && contentType.startsWith("image/")) || isProbablyImageURL(imageURL))}")
                     // checks if the connection is accessible, there is a content type and it starts with "image/" as a prefix for image urls
-                    responseCode == HttpURLConnection.HTTP_OK && contentType != null && contentType.startsWith("image/")
+                    val result = responseCode in 200..299 && ((contentType != null && contentType.startsWith("image/")) || isProbablyImageURL(imageURL))
+                    connection.disconnect()
+                    result
                 } catch(e: Exception) {
+                    println("ERROR: ${e.message}")
                     false
                 }
             }
         }
+    }
 
-
+    private fun isProbablyImageURL(imageURL: String): Boolean {
+        return imageURL.lowercase().matches(".*\\.(png|jpg|jpeg|gif|webp)$".toRegex())
     }
 
     // helper function for checking an imageURL is valid
@@ -67,6 +80,7 @@ class ImageContentViewModel: ViewModel() {
             URL(urlString)
             true
         } catch (e: Exception) {
+            println(e.message)
             false
         }
     }

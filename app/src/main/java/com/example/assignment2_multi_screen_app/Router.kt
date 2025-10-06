@@ -8,6 +8,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.assignment2_multi_screen_app.routes.Routes
+import com.example.assignment2_multi_screen_app.screens.ContentCreationScreen
+import com.example.assignment2_multi_screen_app.screens.DisplayListScreen
 
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
 
@@ -19,16 +21,16 @@ fun Router() {
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
             navController = navController,
-            startDestination = Routes.DisplayList.route
+            startDestination = Routes.Creation.route
         ) {
             composable(Routes.DisplayList.route) {
-                // DisplayListScreen()
+                DisplayListScreen()
             }
             composable(Routes.DisplayDetails.route) {
-                // DisplayDetails()
+                // DisplayDetailsScreen(name = it.arguments?.getString("name") ?: "")
             }
-            composable(Routes.DisplayList.route) {
-                // Main Screen(name = it.arguments?.getString("name") ?: "")
+            composable(Routes.Creation.route) {
+                ContentCreationScreen()
             }
         }
     }
