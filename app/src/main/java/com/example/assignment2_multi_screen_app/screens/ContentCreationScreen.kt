@@ -33,6 +33,18 @@ fun ContentCreationScreen(contentViewModel: ImageContentViewModel = viewModel())
         LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             // Name Input field
             item {
+                Button(
+                    onClick = {
+                        // need to handle image validation if a URL does not have an image
+                        onAddContent(contentViewModel,nameValue,URLValue,contentDescValue)
+                        nameValue = ""
+                        URLValue = ""
+                        contentDescValue = ""
+                    },
+                    enabled = nameValue.isNotBlank() && URLValue.isNotBlank() && contentDescValue.isNotBlank()
+                ) {
+                    Text("Create Content")
+                }
                 TextField(
                     value = nameValue,
                     onValueChange = {nameValue = it},
@@ -54,17 +66,12 @@ fun ContentCreationScreen(contentViewModel: ImageContentViewModel = viewModel())
                     label = { Text("Content Description") },
                     modifier = Modifier.fillMaxWidth()
                 )
-
-                Button(
-                    onClick = {
-                        // need to handle image validation if a URL does not have an image
-                        contentViewModel.addContent(nameValue,URLValue,contentDescValue)
-                    }
-                ) {
-                    Text("Create Content")
-                }
             }
 
         }
     }
+}
+
+fun onAddContent(viewModel: ImageContentViewModel, name: String, imageURL: String,contentDescription: String) {
+    viewModel.addContent(name,imageURL,contentDescription)
 }

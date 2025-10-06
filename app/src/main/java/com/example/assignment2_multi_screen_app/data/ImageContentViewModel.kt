@@ -18,10 +18,14 @@ class ImageContentViewModel: ViewModel() {
     fun addContent(name: String, imageURL: String, contentDescription: String) {
         // validate imageURL
 
-        viewModelScope.launch {
-            if (isImageURL(imageURL)) {
-                _content.add(ImageContent(name, imageURL, contentDescription))
-            }
+//        viewModelScope.launch {
+//            if (isImageURL(imageURL)) {
+//                _content.add(ImageContent(name, imageURL, contentDescription))
+//            }
+//        }
+        // loosened the validation for image URLs
+        if(isValidUrl(imageURL)) {
+            _content.add(ImageContent(name,imageURL,contentDescription))
         }
     }
 

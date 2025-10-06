@@ -3,10 +3,14 @@ package com.example.assignment2_multi_screen_app
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.compositionLocalOf
+import androidx.compose.runtime.remember
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
+import com.example.assignment2_multi_screen_app.data.ImageContentViewModel
 import com.example.assignment2_multi_screen_app.routes.Routes
 import com.example.assignment2_multi_screen_app.screens.ContentCreationScreen
 import com.example.assignment2_multi_screen_app.screens.DisplayListScreen
@@ -21,17 +25,35 @@ fun Router() {
     CompositionLocalProvider(LocalNavController provides navController) {
         NavHost(
             navController = navController,
-            startDestination = Routes.Creation.route
+            startDestination = "RootRoute"
         ) {
-            composable(Routes.DisplayList.route) {
-                DisplayListScreen()
+            navigation(
+                startDestination = Routes.Creation.route,
+                route = "RootRoute"
+            ) {
+                composable(Routes.DisplayList.route) { backstackEntry ->
+                    val parent = remember(backstackEntry) {
+                        navController.getBackStackEntry("RootRoute")
+                    }
+                    val sharedViewModel: ImageContentViewModel = viewModel(parent)
+                    DisplayListScreen(contentViewModel = sharedViewModel)
+                }
+                composable(Routes.DisplayDetails.route) { backstackEntry ->
+                    val parent = remember(backstackEntry) {
+                        navController.getBackStackEntry("RootRoute")
+                    }
+                    val sharedViewModel: ImageContentViewModel = viewModel(parent)
+                    // DisplayDetailsScreen(name = it.arguments?.getString("name") ?: "")
+                }
+                composable(Routes.Creation.route) { backstackEntry ->
+                    val parent = remember(backstackEntry) {
+                        navController.getBackStackEntry("RootRoute")
+                    }
+                    val sharedViewModel: ImageContentViewModel = viewModel(parent)
+                    ContentCreationScreen(sharedViewModel)
+                }
             }
-            composable(Routes.DisplayDetails.route) {
-                // DisplayDetailsScreen(name = it.arguments?.getString("name") ?: "")
-            }
-            composable(Routes.Creation.route) {
-                ContentCreationScreen()
-            }
+
         }
     }
 }
