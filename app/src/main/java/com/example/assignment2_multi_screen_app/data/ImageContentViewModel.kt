@@ -15,6 +15,10 @@ class ImageContentViewModel: ViewModel() {
 
     val content: SnapshotStateList<ImageContent> = _content
 
+    fun readContent(name: String): ImageContent? {
+        return content.find { item -> item.name == name }
+    }
+
     fun addContent(name: String, imageURL: String, contentDescription: String) {
         // validate imageURL
 

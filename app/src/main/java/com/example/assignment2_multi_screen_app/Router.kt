@@ -13,6 +13,7 @@ import androidx.navigation.navigation
 import com.example.assignment2_multi_screen_app.data.ImageContentViewModel
 import com.example.assignment2_multi_screen_app.routes.Routes
 import com.example.assignment2_multi_screen_app.screens.ContentCreationScreen
+import com.example.assignment2_multi_screen_app.screens.DisplayDetailsScreen
 import com.example.assignment2_multi_screen_app.screens.DisplayListScreen
 
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
@@ -38,19 +39,22 @@ fun Router() {
                     val sharedViewModel: ImageContentViewModel = viewModel(parent)
                     DisplayListScreen(contentViewModel = sharedViewModel)
                 }
-                composable(Routes.DisplayDetails.route) { backstackEntry ->
-                    val parent = remember(backstackEntry) {
-                        navController.getBackStackEntry("RootRoute")
-                    }
-                    val sharedViewModel: ImageContentViewModel = viewModel(parent)
-                    // DisplayDetailsScreen(name = it.arguments?.getString("name") ?: "")
-                }
+
                 composable(Routes.Creation.route) { backstackEntry ->
                     val parent = remember(backstackEntry) {
                         navController.getBackStackEntry("RootRoute")
                     }
                     val sharedViewModel: ImageContentViewModel = viewModel(parent)
                     ContentCreationScreen(sharedViewModel)
+                }
+
+                composable(Routes.DisplayDetails.route) { backstackEntry ->
+                    val parent = remember(backstackEntry) {
+                        navController.getBackStackEntry("RootRoute")
+                    }
+                    val sharedViewModel: ImageContentViewModel = viewModel(parent)
+                    val name = backstackEntry.arguments?.getString("name") ?: ""
+                    DisplayDetailsScreen(name, sharedViewModel)
                 }
             }
 
