@@ -1,5 +1,5 @@
 # Assignment 3 WBS and LoE		
-## TOTAL ESTIMATE: 5h 40min     	ACTUAL: (TBD)
+## TOTAL ESTIMATE: 5h 40min     	ACTUAL: ***7h 20min***
 ## Task 1: Project Preparation			
 ### LoE (estimated): ***1h***             LoE (actual): ***1h 15min***
 	1.1 Work Breakdown Structure		15 min			15 min
