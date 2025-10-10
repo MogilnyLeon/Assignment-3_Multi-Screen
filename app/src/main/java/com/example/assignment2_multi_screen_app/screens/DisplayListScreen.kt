@@ -27,7 +27,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
 import com.example.assignment2_multi_screen_app.LocalNavController
 import com.example.assignment2_multi_screen_app.data.ImageContent
 import com.example.assignment2_multi_screen_app.data.ImageContentViewModel
@@ -37,7 +36,7 @@ import com.example.assignment2_multi_screen_app.routes.Routes
 @Composable
 fun DisplayListScreen(contentViewModel: ImageContentViewModel = viewModel()) {
     val content = contentViewModel.content
-    MainLayout("Temp") {
+    MainLayout("Content") {
         val navController = LocalNavController.current
 
         DisplayList(content, contentViewModel::removeContent, navController)

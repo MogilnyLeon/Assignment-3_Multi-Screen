@@ -29,7 +29,7 @@ fun ContentCreationScreen(contentViewModel: ImageContentViewModel = viewModel())
     var nameValue by rememberSaveable { mutableStateOf("") }
     var URLValue by rememberSaveable { mutableStateOf("") }
     var contentDescValue by rememberSaveable { mutableStateOf("") }
-    MainLayout("Temp") {
+    MainLayout("Create") {
         LazyColumn(verticalArrangement = Arrangement.spacedBy(16.dp), modifier = Modifier.fillMaxWidth().padding(16.dp)) {
             // Name Input field
             item {
