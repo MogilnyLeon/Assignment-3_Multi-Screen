@@ -10,6 +10,29 @@ import androidx.compose.runtime.Composable
 import com.example.assignment2_multi_screen_app.LocalNavController
 import com.example.assignment2_multi_screen_app.routes.Routes
 
+/**
+ * A shared bottom navigation bar used for navigating between app screens.
+ *
+ * This composable displays a [BottomAppBar] with two action buttons:
+ * - A **Create** button that navigates to the content creation screen.
+ * - A **List** button that navigates to the content list screen.
+ *
+ * It retrieves the current [androidx.navigation.NavController] instance from [LocalNavController]
+ * and uses it to handle navigation when icons are clicked.
+ *
+ * Example usage:
+ * ```
+ * Scaffold(
+ *     bottomBar = { SharedBottomBar() }
+ * ) { innerPadding ->
+ *     // Screen content here
+ * }
+ * ```
+ *
+ * @see BottomAppBar
+ * @see IconButton
+ * @see LocalNavController
+ */
 @Composable
 fun SharedBottomBar() {
     val navController = LocalNavController.current

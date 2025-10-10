@@ -7,14 +7,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -33,6 +31,22 @@ import com.example.assignment2_multi_screen_app.data.ImageContentViewModel
 import com.example.assignment2_multi_screen_app.layout.MainLayout
 import com.example.assignment2_multi_screen_app.routes.Routes
 
+/**
+ * A screen composable that displays a list of image content items.
+ *
+ * This composable retrieves the list of [ImageContent] from the provided
+ * [ImageContentViewModel] and displays it within a [MainLayout] scaffold,
+ * providing a consistent top and bottom bar.
+ *
+ * Each item in the list is displayed using the [DisplayList] composable.
+ *
+ * @param contentViewModel The [ImageContentViewModel] that provides the list
+ * of content items and manages removal of items. Defaults to the current [viewModel].
+ *
+ * @see MainLayout
+ * @see DisplayList
+ * @see ImageContentViewModel
+ */
 @Composable
 fun DisplayListScreen(contentViewModel: ImageContentViewModel = viewModel()) {
     val content = contentViewModel.content
@@ -43,6 +57,26 @@ fun DisplayListScreen(contentViewModel: ImageContentViewModel = viewModel()) {
     }
 }
 
+/**
+ * Displays a list of [ImageContent] items in a scrollable [LazyColumn].
+ *
+ * Each content item is shown as a [Card] with:
+ * - The index and name of the content.
+ * - A delete [IconButton] to remove the item via the provided [remove] function.
+ * - Clickable behavior on the row to navigate to the detail screen for that item
+ *   using the given [NavController].
+ *
+ * @param list The list of [ImageContent] items to display.
+ * @param remove A lambda function invoked when the user clicks the delete button
+ * for an item. It receives the `name` of the content to remove.
+ * @param navController The [NavController] used to navigate to the detail screen
+ * for a selected content item.
+ *
+ * @see LazyColumn
+ * @see Card
+ * @see NavController
+ * @see Routes.DisplayDetails
+ */
 @Composable
 fun DisplayList(list: List<ImageContent>,
                 remove:(String) -> Unit,

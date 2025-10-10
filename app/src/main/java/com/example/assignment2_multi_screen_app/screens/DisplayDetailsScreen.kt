@@ -30,6 +30,36 @@ import coil.request.ImageRequest
 import com.example.assignment2_multi_screen_app.data.ImageContentViewModel
 import com.example.assignment2_multi_screen_app.layout.MainLayout
 
+/**
+ * A screen composable that displays detailed information about a specific [com.example.assignment2_multi_screen_app.data.ImageContent] item.
+ *
+ * This composable retrieves the content item from the provided [ImageContentViewModel]
+ * by its `name`. If the item is found, it displays:
+ * - The content's **name**.
+ * - The **image** associated with the content using [SubcomposeAsyncImage] with
+ *   proper loading and error placeholders.
+ * - The content's **description**.
+ *
+ * If the item is not found, a placeholder message is shown indicating that
+ * no content exists for the given name.
+ *
+ * The layout uses [MainLayout] to provide a consistent top bar and bottom bar.
+ * The content is wrapped in a [Card] with rounded corners and padding for
+ * visual styling.
+ *
+ * Example usage:
+ * ```
+ * DisplayDetailsScreen(name = "SunsetPhoto", contentViewModel = myViewModel)
+ * ```
+ *
+ * @param name The name of the content item to display details for.
+ * @param contentViewModel The [ImageContentViewModel] that manages the list of content items.
+ * Defaults to the current [viewModel].
+ *
+ * @see MainLayout
+ * @see SubcomposeAsyncImage
+ * @see ImageContentViewModel.readContent
+ */
 @Composable
 fun DisplayDetailsScreen(name: String, contentViewModel: ImageContentViewModel = viewModel()) {
     val item = contentViewModel.readContent(name)
@@ -70,6 +100,8 @@ fun DisplayDetailsScreen(name: String, contentViewModel: ImageContentViewModel =
 //                            .height(240.dp)
 //                            .clip(RoundedCornerShape(12.dp))
 //                    )
+                    // See Android Developers website for inspiration:
+                    // https://developer.android.com/codelabs/basic-android-kotlin-compose-load-images#2
                     SubcomposeAsyncImage(
                         model = ImageRequest.Builder(LocalContext.current)
                             .data(item.imageURL)

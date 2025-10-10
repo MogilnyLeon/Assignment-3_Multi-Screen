@@ -18,7 +18,39 @@ import com.example.assignment2_multi_screen_app.screens.DisplayListScreen
 
 val LocalNavController = compositionLocalOf<NavController> { error("No NavController found!") }
 
-
+/**
+ * Sets up the application's navigation graph and provides a shared [NavController].
+ *
+ * This composable defines the root navigation structure for the app using [NavHost] and
+ * [rememberNavController]. It provides the [LocalNavController] composition local to
+ * descendant composables, allowing access to the shared [NavController] throughout the app.
+ *
+ * The navigation graph includes:
+ * - [Routes.Creation] — Displays the [ContentCreationScreen].
+ * - [Routes.DisplayList] — Displays the [DisplayListScreen].
+ * - [Routes.DisplayDetails] — Displays the [DisplayDetailsScreen] for a specific content item.
+ *
+ * A shared [ImageContentViewModel] is scoped to the "RootRoute" back stack entry,
+ * ensuring that all screens within this root navigation share the same ViewModel instance.
+ *
+ * Each composable destination extracts its `backstackEntry` arguments as needed, e.g.,
+ * the `name` parameter for [Routes.DisplayDetails].
+ *
+ * Example usage:
+ * ```
+ * @Composable
+ * fun MyApp() {
+ *     Router()
+ * }
+ * ```
+ *
+ * @see NavHost
+ * @see rememberNavController
+ * @see CompositionLocalProvider
+ * @see LocalNavController
+ * @see ImageContentViewModel
+ * @see Routes
+ */
 @Composable
 fun Router() {
     val navController = rememberNavController()
